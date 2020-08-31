@@ -1,0 +1,60 @@
+{
+  "name": "blockly-block-fabric",
+  "version": "0.20200831.0",
+  "description": "A Blockly block.",
+  "scripts": {
+    "build": "blockly-scripts build",
+    "clean": "blockly-scripts clean",
+    "lint": "blockly-scripts lint",
+    "prepublishOnly": "npm run clean && npm run build",
+    "start": "blockly-scripts start"
+  },
+  "main": "./dist/index.js",
+  "module": "./src/index.js",
+  "unpkg": "./dist/index.js",
+  "author": "",
+  "keywords": [
+    "blockly",
+    "blockly-plugin",
+    "blockly-block",
+    "fabric"
+  ],
+  "homepage": "https://github.com/rachel-fenichel/trivial-fabric/tree/master/block-fabric#readme",
+  "bugs": {
+    "url": "https://github.com/rachel-fenichel/trivial-fabric/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rachel-fenichel/trivial-fabric.git",
+    "directory": "block-fabric"
+  },
+  "license": "Apache 2.0",
+  "directories": {
+    "dist": "dist",
+    "src": "src"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "devDependencies": {
+    "@blockly/dev-scripts": "^1.0.3",
+    "@blockly/dev-tools": "^1.1.3",
+    "blockly": "^3.20200625.2"
+  },
+  "peerDependencies": {
+    "blockly": ">=2"
+  },
+  "publishConfig": {},
+  "eslintConfig": {
+    "extends": "@blockly/eslint-config"
+  },
+  "engines": {
+    "node": ">=8.17.0"
+  },
+  "browserslist": [
+    "defaults",
+    "IE 11",
+    "IE_Mob 11"
+  ]
+}
