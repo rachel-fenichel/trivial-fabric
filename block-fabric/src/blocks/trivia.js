@@ -18,70 +18,51 @@ import {FABRIC_SHAPE_TYPE} from './fabric_blocks';
 const TRIVIA_FUNCTION_HUE = 360;
 
 /**
- * Initializes an "event function" block with return given the name and
- * arguments for the block.
- * @param {string} name The name of the function.
- * @param {string} args A comma separated string of the argument variable names.
- * @param {string} returnType The return type of the function.
- * @return {!Function} An initialization function with arguments bound.
- * @this {Blockly.Block}
- * @private
+ * Default HSV hue for all trivia game blocks.
  */
-const eventWithReturnInitFactory_ =
-    function(name, args, returnType) {
-  return function() {
-    this.jsonInit({
-      "message0": "%1 (%2) %3 %4 return %5",
-      "args0": [
-        name,
-        args,
-        {
-          "type": "input_dummy"
-        },
-        {
-          "type": "input_statement",
-          "name": "STACK"
-        },
-        {
-          "type": "input_value",
-          "check": returnType,
-          "align": "right",
-          "name": "RETURN"
-        }
-      ],
-      "inputsInline": true,
-      "colour": TRIVIA_FUNCTION_HUE,
-    });
-  };
-};
+const TRIVIA_BLOCK_HUE = 300;
+
+// This MIGHT need to move
+Blockly.JavaScript.addReservedWords(
+    'drawQuestionShape,drawAnswerShape,getScore,updateScore');
 
 /**
- * Initializes an "event function" block without return given the name and
- * arguments for the block.
+ * Initializes an 'event function' block given the name and arguments for
+ * the block.
  * @param {string} name The name of the function.
  * @param {string} args A comma separated string of the argument variable names.
- * @param {string} returnType The return type of the function.
+ * @param {string=} returnType The return type of the function.
  * @return {!Function} An initialization function with arguments bound.
- * @this {Blockly.Block}
+ * @this Blockly.Block
  * @private
  */
-const eventNoReturnInitFactory_ = function(name, args) {
+const eventBlockInitFactory_ = (name, args, returnType) => {
+  const message0 = returnType ? '%1 (%2) %3 %4 return %5' : '%1 (%2) %3 %4';
+  const args0 = [
+    name,
+    args,
+    {
+      'type': 'input_dummy',
+    },
+    {
+      'type': 'input_statement',
+      'name': 'STACK',
+    },
+  ];
+  if (returnType) {
+    args0.push({
+      'type': 'input_value',
+      'check': returnType,
+      'align': 'right',
+      'name': 'RETURN',
+    });
+  }
   return function() {
     this.jsonInit({
-      "message0": "%1 (%2) %3 %4",
-      "args0": [
-        name,
-        args,
-        {
-          "type": "input_dummy"
-        },
-        {
-          "type": "input_statement",
-          "name": "STACK"
-        }
-      ],
-      "inputsInline": true,
-      "colour": TRIVIA_FUNCTION_HUE,
+      'message0': message0,
+      'args0': args0,
+      'inputsInline': true,
+      'colour': TRIVIA_FUNCTION_HUE,
     });
   };
 };
@@ -89,23 +70,21 @@ const eventNoReturnInitFactory_ = function(name, args) {
 const eventFuncBlockFactory_ = (name, args, returnType = undefined) => {
   const argList = args.split(',');
   return {
-    init: returnType ?
-        eventWithReturnInitFactory_(name, args, returnType) :
-        eventNoReturnInitFactory_(name, args),
+    init: eventBlockInitFactory_(name, args, returnType),
     getVars: () => argList,
-    customContextMenu: function (options) {
+    customContextMenu: function(options) {
       // Add options to create getters for arg parameter.
       if (!this.isCollapsed()) {
         argList.forEach((argName) => {
-          var option = {enabled: true};
-          var name = argName;
+          const option = {enabled: true};
+          const name = argName;
           option.text = Blockly.Msg['VARIABLES_SET_CREATE_GET'].replace('%1',
               name);
-          var xmlBlock = Blockly.utils.xml.createElement('block');
+          const xmlBlock = Blockly.utils.xml.createElement('block');
           xmlBlock.setAttribute('type', 'variables_get');
-          var xmlField = Blockly.utils.xml.createElement('field');
+          const xmlField = Blockly.utils.xml.createElement('field');
           xmlField.setAttribute('name', 'VAR');
-          var argumentName = Blockly.utils.xml.createTextNode(name);
+          const argumentName = Blockly.utils.xml.createTextNode(name);
           xmlField.appendChild(argumentName);
           xmlBlock.appendChild(xmlField);
 
@@ -113,7 +92,7 @@ const eventFuncBlockFactory_ = (name, args, returnType = undefined) => {
           options.push(option);
         });
       }
-    }
+    },
   };
 };
 
@@ -128,15 +107,14 @@ const eventFuncBlockFactory_ = (name, args, returnType = undefined) => {
 const eventFuncJavascriptFactory_ = (name, args, hasReturn) => {
   return function(block) {
     // Define a procedure with/without a return value.
-    var branch = Blockly.JavaScript.statementToCode(block, 'STACK');
+    let branch = Blockly.JavaScript.statementToCode(block, 'STACK');
     if (hasReturn) {
-      var returnValue = Blockly.JavaScript.valueToCode(block, 'RETURN',
+      let returnValue = Blockly.JavaScript.valueToCode(block, 'RETURN',
           Blockly.JavaScript.ORDER_NONE) || '';
       returnValue = '  return ' + returnValue + ';\n';
       branch += returnValue;
-
     }
-    var code = 'function ' + name + '(' + args + ') {\n' + branch + '}';
+    let code = 'function ' + name + '(' + args + ') {\n' + branch + '}';
     code = Blockly.JavaScript.scrub_(block, code);
     Blockly.JavaScript.definitions_[name] = code;
     return null;
@@ -176,25 +154,98 @@ Blockly.JavaScript['trivia_draw_answer_shape'] =
  * @type {{init: !Function}}
  */
 Blockly.Blocks['trivia_on_answer_right'] =
-    eventFuncBlockFactory_('onAnswerRight', 'team, answer',);
+    eventFuncBlockFactory_('onAnswerRight', 'points',);
 
 /**
  * Defines the JavaScript generation for onAnswerRight.
  * @type {!Function}
  */
 Blockly.JavaScript['trivia_on_answer_right'] =
-    eventFuncJavascriptFactory_('onAnswerRight', 'team, answer', false);
+    eventFuncJavascriptFactory_('onAnswerRight', 'points', false);
 
 /**
  * Block for defining onAnswerWrong event handler.
  * @type {{init: !Function}}
  */
 Blockly.Blocks['trivia_on_answer_wrong'] =
-    eventFuncBlockFactory_('onAnswerWrong', 'team, answer',);
+    eventFuncBlockFactory_('onAnswerWrong', 'points',);
 
 /**
  * Defines the JavaScript generation for onAnswerWrong.
  * @type {!Function}
  */
 Blockly.JavaScript['trivia_on_answer_wrong'] =
-    eventFuncJavascriptFactory_('onAnswerWrong', 'team, answer', false);
+    eventFuncJavascriptFactory_('onAnswerWrong', 'points', false);
+
+/**
+ * Block for getting score.
+ * @this Blockly.Block
+ */
+Blockly.Blocks['get_score'] = {
+  init: function() {
+    this.jsonInit({
+      'message0': '%1(%2)',
+      'args0': ['getScore', ''],
+      'output': 'Number',
+      'colour': TRIVIA_BLOCK_HUE,
+    });
+  },
+};
+
+/**
+ * Defines the JavaScript generation for getScore.
+ * @param {Blockly.Block} block The block to generate code for.
+ * @return {!Array.<string|number>} The generated code and order.
+ */
+Blockly.JavaScript['get_score'] = (block) => {
+  return ['getScore()', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+/**
+ * Block for updating score.
+ * @this Blockly.Block
+ */
+Blockly.Blocks['update_score'] = {
+  init: function() {
+    this.jsonInit({
+      'message0': '%1 %2',
+      'args0': [
+        {
+          'type': 'field_dropdown',
+          'name': 'OP',
+          'options': [
+            ['Add points to score', 'ADD'],
+            ['Reduce points from score', 'MINUS'],
+          ],
+        },
+        {
+          'type': 'input_value',
+          'name': 'DELTA',
+          'check': 'Number',
+        },
+      ],
+      'previousStatement': null,
+      'nextStatement': null,
+      'colour': TRIVIA_BLOCK_HUE,
+    });
+  },
+};
+
+/**
+ * Defines the JavaScript generation for updating score.
+ * @param {Blockly.Block} block The block to generate code for.
+ * @return {string} The generated code.
+ */
+Blockly.JavaScript['update_score'] = (block) => {
+  const operator = block.getFieldValue('OP');
+  const order = operator == 'ADD' ? Blockly.JavaScript.ORDER_NONE :
+      Blockly.JavaScript.ORDER_UNARY_NEGATION;
+  const delta =
+      Blockly.JavaScript.valueToCode(block, 'DELTA', order) || '0';
+  let code = 'updateScore(';
+  if (operator == 'MINUS') {
+    code += '-';
+  }
+  code += delta + ');\n';
+  return code;
+};
