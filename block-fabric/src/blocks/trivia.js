@@ -154,28 +154,28 @@ Blockly.JavaScript['trivia_draw_answer_shape'] =
  * @type {{init: !Function}}
  */
 Blockly.Blocks['trivia_on_answer_right'] =
-    eventFuncBlockFactory_('onAnswerRight', 'answer',);
+    eventFuncBlockFactory_('onAnswerRight', 'points',);
 
 /**
  * Defines the JavaScript generation for onAnswerRight.
  * @type {!Function}
  */
 Blockly.JavaScript['trivia_on_answer_right'] =
-    eventFuncJavascriptFactory_('onAnswerRight', 'answer', false);
+    eventFuncJavascriptFactory_('onAnswerRight', 'points', false);
 
 /**
  * Block for defining onAnswerWrong event handler.
  * @type {{init: !Function}}
  */
 Blockly.Blocks['trivia_on_answer_wrong'] =
-    eventFuncBlockFactory_('onAnswerWrong', 'score',);
+    eventFuncBlockFactory_('onAnswerWrong', 'points',);
 
 /**
  * Defines the JavaScript generation for onAnswerWrong.
  * @type {!Function}
  */
 Blockly.JavaScript['trivia_on_answer_wrong'] =
-    eventFuncJavascriptFactory_('onAnswerWrong', 'score', false);
+    eventFuncJavascriptFactory_('onAnswerWrong', 'points', false);
 
 /**
  * Block for getting score.
