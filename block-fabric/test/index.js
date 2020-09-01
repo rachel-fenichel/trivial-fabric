@@ -14,7 +14,10 @@ import '../src/index';
 
 
 // TODO: Edit list of blocks.
-const allBlocks = ['block_template'];
+const allBlocks = ['block_template', 'trivia_draw_question_shape',
+  'trivia_draw_answer_shape', 'place_holder_fabric_block',
+  'place_holder_not_fabric_block', 'trivia_on_answer_right',
+  'trivia_on_answer_wrong'];
 
 /**
  * Create a workspace.
