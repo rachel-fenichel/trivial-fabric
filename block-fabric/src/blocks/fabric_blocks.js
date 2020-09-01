@@ -26,3 +26,11 @@ Blockly.defineBlocksWithJsonArray([
   },
 ]);
 
+/**
+ * Defines the JavaScript generation for place_holder_fabric_block.
+ * @type {!Function}
+ */
+Blockly.JavaScript['place_holder_fabric_block'] = () => {
+  return ['fabric block', Blockly.JavaScript.ORDER_ATOMIC];
+};
+
