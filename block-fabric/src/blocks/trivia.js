@@ -10,17 +10,12 @@
 
 
 import Blockly from 'blockly/core';
+import {FABRIC_SHAPE_TYPE} from './fabric_blocks';
 
 /**
  * HSV hue for all trivia game blocks with function.
  */
 const TRIVIA_FUNCTION_HUE = 360;
-
-/**
- * The return type for a fabric shape block.
- * @type {string}
- */
-const FABRIC_SHAPE_TYPE = 'FabricShape';  // TBD, may change
 
 /**
  * Initializes an "event function" block given the name and arguments for the
@@ -36,7 +31,7 @@ const drawShapeEventInitFactory__ =
     function(name, args, returnType) {
   return function() {
     this.jsonInit({
-      "message0": "function %1(%2) { %3 %4 return %5 }",
+      "message0": "%1 (%2) %3 %4 return %5",
       "args0": [
         name,
         args,
