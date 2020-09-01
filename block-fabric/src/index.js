@@ -9,7 +9,11 @@
  * @fileoverview Block overview.
  */
 
+import './blocks/trivia.js';
+import './blocks/fabric_blocks.js';
+
 import Blockly from 'blockly/core';
+import {FABRIC_SHAPE_TYPE} from './blocks/fabric_blocks';
 
 // TODO: Update block definition.
 Blockly.defineBlocksWithJsonArray([
@@ -17,5 +21,11 @@ Blockly.defineBlocksWithJsonArray([
     'type': 'block_template',
     'message0': 'block template',
     'style': 'math_blocks',
+  },
+  {
+    'type': 'place_holder_not_fabric_block',
+    'message0': 'Not a FabricShape',
+    'output': 'not' + FABRIC_SHAPE_TYPE,
+    'colour': '#aaaaaa',
   },
 ]);
