@@ -72,7 +72,7 @@ const eventFuncBlockFactory_ = (name, args, returnType = undefined) => {
   return {
     init: eventBlockInitFactory_(name, args, returnType),
     getVars: () => argList,
-    customContextMenu: (options) => {
+    customContextMenu: function(options) {
       // Add options to create getters for arg parameter.
       if (!this.isCollapsed()) {
         argList.forEach((argName) => {
