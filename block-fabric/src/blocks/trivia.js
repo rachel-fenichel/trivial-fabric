@@ -18,6 +18,15 @@ import {FABRIC_SHAPE_TYPE} from './fabric_blocks';
 const TRIVIA_FUNCTION_HUE = 360;
 
 /**
+ * Default HSV hue for all trivia game blocks.
+ */
+const TRIVIA_BLOCK_HUE = 300;
+
+// I'm not sure if this needs to move.
+Blockly.JavaScript.addReservedWords(
+    'drawQuestionShape,drawAnswerShape,getscore,updatescore');
+
+/**
  * Initializes an "event function" block with return given the name and
  * arguments for the block.
  * @param {string} name The name of the function.
@@ -176,25 +185,98 @@ Blockly.JavaScript['trivia_draw_answer_shape'] =
  * @type {{init: !Function}}
  */
 Blockly.Blocks['trivia_on_answer_right'] =
-    eventFuncBlockFactory_('onAnswerRight', 'team, answer',);
+    eventFuncBlockFactory_('onAnswerRight', 'answer',);
 
 /**
  * Defines the JavaScript generation for onAnswerRight.
  * @type {!Function}
  */
 Blockly.JavaScript['trivia_on_answer_right'] =
-    eventFuncJavascriptFactory_('onAnswerRight', 'team, answer', false);
+    eventFuncJavascriptFactory_('onAnswerRight', 'answer', false);
 
 /**
  * Block for defining onAnswerWrong event handler.
  * @type {{init: !Function}}
  */
 Blockly.Blocks['trivia_on_answer_wrong'] =
-    eventFuncBlockFactory_('onAnswerWrong', 'team, answer',);
+    eventFuncBlockFactory_('onAnswerWrong', 'score',);
 
 /**
  * Defines the JavaScript generation for onAnswerWrong.
  * @type {!Function}
  */
 Blockly.JavaScript['trivia_on_answer_wrong'] =
-    eventFuncJavascriptFactory_('onAnswerWrong', 'team, answer', false);
+    eventFuncJavascriptFactory_('onAnswerWrong', 'score', false);
+
+/**
+ * Block for getting score.
+ * @this {Blockly.Block}
+ */
+Blockly.Blocks['get_score'] = {
+  init: function() {
+    this.jsonInit({
+      "message0": "%1(%2)",
+      "args0": ["getScore", ""],
+      "output": "Number",
+      "colour": TRIVIA_BLOCK_HUE,
+    });
+  }
+};
+
+/**
+ * Defines the JavaScript generation for getScore.
+ * @param {Blockly.Block} block
+ * @return {!Array.<string|number>}
+ */
+Blockly.JavaScript['get_score'] = function(block) {
+  return ['getScore()', Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+/**
+ * Block for updating score.
+ * @this {Blockly.Block}
+ */
+Blockly.Blocks['update_score'] = {
+  init: function() {
+    this.jsonInit({
+      "message0": "%1 %2",
+      "args0": [
+          {
+            "type": "field_dropdown",
+            "name": "OP",
+            "options": [
+                ["Add points to score", "ADD"],
+                ["Reduce points from score", "MINUS"]
+            ]
+          },
+          {
+            "type": "input_value",
+            "name": "DELTA",
+            "check": "Number"
+          }
+        ],
+      "previousStatement": null,
+      "nextStatement": null,
+      "colour": TRIVIA_BLOCK_HUE
+    });
+  }
+};
+
+/**
+ * Defines the JavaScript generation for updating score.
+ * @param {Blockly.Block} block
+ * @return {!Array.<string|number>}
+ */
+Blockly.JavaScript['update_score'] = function(block) {
+  const operator =  block.getFieldValue('OP');
+  const order = operator == 'ADD' ? Blockly.JavaScript.ORDER_NONE :
+      Blockly.JavaScript.ORDER_UNARY_NEGATION;
+  const delta =
+      Blockly.JavaScript.valueToCode(block, 'DELTA', order) || '0';
+  let code = 'updateScore(';
+  if (operator == 'MINUS') {
+    code += '-'
+  }
+  code += delta + ');\n';
+  return code;
+};
