@@ -9,9 +9,9 @@
  */
 
 import * as Blockly from 'blockly';
-import {createPlayground} from '@blockly/dev-tools';
+// import {createPlayground} from '@blockly/dev-tools';
 import '../src/index';
-
+import {GameUi} from '../src/gameUi';
 
 // TODO: Edit list of blocks.
 const allBlocks = [
@@ -21,24 +21,14 @@ const allBlocks = [
   'trivia_on_answer_wrong', 'get_score', 'update_score', 'math_number'];
 
 
-
-/**
- * Create a workspace.
- * @param {HTMLElement} blocklyDiv The blockly container div.
- * @param {!Blockly.BlocklyOptions} options The Blockly options.
- * @return {!Blockly.WorkspaceSvg} The created workspace.
- */
-function createWorkspace(blocklyDiv, options) {
-  const workspace = Blockly.inject(blocklyDiv, options);
-  return workspace;
-}
-
 document.addEventListener('DOMContentLoaded', function() {
   const defaultOptions = {
     toolbox: `<xml xmlns="https://developers.google.com/blockly/xml">
       ${allBlocks.map((b) => `<block type="${b}"></block>`)}
     </xml>`,
+    renderer: 'zelos',
   };
-  createPlayground(document.getElementById('root'), createWorkspace,
+  Blockly.inject(document.getElementById('editor'),
       defaultOptions);
+  new GameUi('gameplayCanvas');
 });

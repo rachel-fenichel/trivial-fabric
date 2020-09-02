@@ -33,6 +33,7 @@ Blockly.defineBlocksWithJsonArray([
 /**
  * Defines the JavaScript generation for place_holder_not_fabric_block.
  * @type {!Function}
+ * @return {Array<string, number>}
  */
 Blockly.JavaScript['place_holder_not_fabric_block'] = () => {
   return ['nor fabric block', Blockly.JavaScript.ORDER_ATOMIC];
