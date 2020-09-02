@@ -56,5 +56,8 @@
     "defaults",
     "IE 11",
     "IE_Mob 11"
-  ]
+  ],
+  "dependencies": {
+    "fabric": "^4.1.0"
+  }
 }
