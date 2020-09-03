@@ -21,7 +21,7 @@ const allBlocks = [
   'trivia_draw_answer_shape', 'place_holder_fabric_block',
   'place_holder_not_fabric_block', 'trivia_on_answer_right',
   'trivia_on_answer_wrong', 'get_score', 'update_score', 'math_number',
-  'fabric_text', 'answer_text_var', 'text', 'colour_picker'];
+  'fabric_text', 'answer_text_var', 'text', 'colour_picker', 'create_game'];
 
 let gameController;
 let workspace;
@@ -35,15 +35,27 @@ document.addEventListener('DOMContentLoaded', function() {
   };
   workspace = Blockly.inject(document.getElementById('editor'),
       defaultOptions);
+  var startBlock = workspace.newBlock('start');
+  startBlock.initSvg();
+  startBlock.render();
+  startBlock.setMovable(false);
+  var createGameBlock = workspace.newBlock('create_game');
+  createGameBlock.initSvg();
+  createGameBlock.render();
+  startBlock.nextConnection.connect(createGameBlock.previousConnection);
   gameController = new GameController('gameplayCanvas');
 });
 
 document.getElementById('start').addEventListener('click', function() {
-  gameController.newGame();
+  var startBlock = workspace.getBlocksByType('start')[0];
+  var startCode = Blockly['JavaScript'].blockToCode(startBlock);
+
+  eval(startCode);
 });
 
 document.getElementById('toXml').addEventListener('click', () => {
   var code = Blockly['JavaScript'].workspaceToCode(workspace);
-  eval(code);
+  var blockCode = Blockly['JavaScript'].blockToCode(workspace.getBlocksByType('start')[0]);
+  console.log(code);
 });
 

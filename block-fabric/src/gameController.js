@@ -2,11 +2,12 @@ import { GameUi } from './gameUi';
 import { GameInfo } from './gameInfo';
 
 export class GameController {
-  constructor(id) {
+  constructor(id, apiUrl) {
     this.gameUi = new GameUi(id, this.nextTurn.bind(this));
-    this.gameInfo = new GameInfo();
+    this.gameInfo = new GameInfo(apiUrl);
   }
-  newGame() {
+  newGame(url) {
+    this.gameInfo.setUrl(url);
     this.gameInfo.reset();
     this.firstTurn();
   }
