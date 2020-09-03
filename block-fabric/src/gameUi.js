@@ -1,4 +1,5 @@
 import { fabric } from 'fabric';
+import * as Blockly from 'blockly';
 
 export class GameUi {
   constructor(id, onClickFn) {
@@ -82,7 +83,33 @@ export class GameUi {
 
   renderAnswerOptionText(index, optionText) {
     const top = 175 + (index * 75) + 5;
-    const text = new fabric.Text(optionText, { left: 100, top: top });
-    this.canvas.add(text);
+    var code = this.getCodeForBlockType('fabric_text');
+    if (code) {
+      eval(code);
+    } else {
+      const text = new fabric.Text(optionText, { left: 100, top: top });
+      this.canvas.add(text);
+    }
+    
+  }
+
+  /**
+   * Searches workspace for first block of given type and returns the code for it
+   * @param {string} type 
+   * @return {?string} code string, or null if block not found
+   */
+  getCodeForBlockType(type) {
+    const ws = Blockly.getMainWorkspace();
+    const block = ws.getTopBlocks(true).find(block => block.type === type);
+    if (!block) {
+      return null;
+    }
+    Blockly.JavaScript.init(ws);
+    let code = Blockly.JavaScript.blockToCode(block);
+    if (Array.isArray(code)) {
+      // Some blocks are a tuple of something, I don't know or care what the second thing is
+      return code[0];
+    }
+    return code;
   }
 }
