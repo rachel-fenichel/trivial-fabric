@@ -5,6 +5,9 @@ export class GameController {
   constructor(id) {
     this.gameUi = new GameUi(id, this.nextTurn.bind(this));
     this.gameInfo = new GameInfo();
+  }
+  newGame() {
+    this.gameInfo.reset();
     this.firstTurn();
   }
   async firstTurn() {

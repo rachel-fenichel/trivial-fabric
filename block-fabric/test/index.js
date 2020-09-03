@@ -22,6 +22,8 @@ const allBlocks = [
   'place_holder_not_fabric_block', 'trivia_on_answer_right',
   'trivia_on_answer_wrong', 'get_score', 'update_score', 'math_number'];
 
+let gameController;
+let workspace;
 
 document.addEventListener('DOMContentLoaded', function() {
   const defaultOptions = {
@@ -30,11 +32,17 @@ document.addEventListener('DOMContentLoaded', function() {
     </xml>`,
     renderer: 'zelos',
   };
-  var workspace = Blockly.inject(document.getElementById('editor'),
+  workspace = Blockly.inject(document.getElementById('editor'),
       defaultOptions);
-  new GameController('gameplayCanvas');
-  document.getElementById('toXml').addEventListener('click', () => {
-    var code = Blockly['JavaScript'].workspaceToCode(workspace);
-    eval(code);
-  });
+  gameController = new GameController('gameplayCanvas');
 });
+
+document.getElementById('start').addEventListener('click', function() {
+  gameController.newGame();
+});
+
+document.getElementById('toXml').addEventListener('click', () => {
+  var code = Blockly['JavaScript'].workspaceToCode(workspace);
+  eval(code);
+});
+
