@@ -12,6 +12,8 @@ import * as Blockly from 'blockly';
 // import {createPlayground} from '@blockly/dev-tools';
 import '../src/index';
 import {GameController} from '../src/gameController';
+import {GameUi} from '../src/gameUi';
+import {GameInfo} from '../src/gameInfo';
 
 // TODO: Edit list of blocks.
 const allBlocks = [
@@ -21,6 +23,7 @@ const allBlocks = [
   'trivia_on_answer_wrong', 'get_score', 'update_score', 'math_number'];
 
 let gameController;
+let workspace;
 
 document.addEventListener('DOMContentLoaded', function() {
   const defaultOptions = {
@@ -29,11 +32,17 @@ document.addEventListener('DOMContentLoaded', function() {
     </xml>`,
     renderer: 'zelos',
   };
-  Blockly.inject(document.getElementById('editor'),
+  workspace = Blockly.inject(document.getElementById('editor'),
       defaultOptions);
   gameController = new GameController('gameplayCanvas');
 });
 
-document.getElementById("start").addEventListener("click", function() {
+document.getElementById('start').addEventListener('click', function() {
   gameController.newGame();
 });
+
+document.getElementById('toXml').addEventListener('click', () => {
+  var code = Blockly['JavaScript'].workspaceToCode(workspace);
+  eval(code);
+});
+

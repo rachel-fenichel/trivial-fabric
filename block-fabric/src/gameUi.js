@@ -62,8 +62,8 @@ export class GameUi {
   }
 
   renderQuestionText() {
-    const text = new fabric.Text(this.question.questionText, { left: 100, top: 60 });
-    this.canvas.add(text);
+    const textBox = new fabric.Textbox(this.question.questionText, { left: 60, top: 60, width: 400, fontSize: 20, lineHeight:1 } )
+    this.canvas.add(textBox);
   }
 
   renderAnswerOption(index, option) {

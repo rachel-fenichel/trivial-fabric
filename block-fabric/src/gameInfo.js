@@ -1,17 +1,28 @@
 export class GameInfo {
   constructor() {
-    this.reset();
   }
 
-  reset() {
-    this.questions = this.getQuestionList();
+  async reset() {
+    this.questions = await this.getQuestionList();
     this.score = 0;
     this.questionIndex = 0;
     this.activeQuestion = null;
   }
 
-  getQuestionList() {
-    return [new TriviaQuestion(), new TriviaQuestion()];
+  async getQuestionList(api_url) {
+    const resp = await fetch("https://opentdb.com/api.php?amount=10&type=multiple");
+    const jsonData = await resp.json();
+    const questions = jsonData.results;
+    const parsedQuestions = this.parseQuestions(questions);
+    return parsedQuestions;
+  }
+
+  parseQuestions(questions) {
+    var parsedQuestions = [];
+    questions.forEach((element, index) => {
+      parsedQuestions.push(new TriviaQuestion(element));
+    });
+    return parsedQuestions;
   }
 
   getQuestion() {
@@ -38,16 +49,18 @@ export class GameInfo {
 }
 
 export class TriviaQuestion {
-  constructor() {
-    this.questionText = 'Is this a hello world?';
-    this.answerOptions =
-      [
-        new AnswerOption('Maybe', false),
-        new AnswerOption('Definitely', true),
-        new AnswerOption('Probably', false),
-        new AnswerOption('Nope', false),
-      ];
-    this.correctAnswer = this.answerOptions[1];
+  constructor(questionData) {
+    this.questionText = questionData.question;
+
+    const answerOptions = [];
+    questionData.incorrect_answers.forEach((incorrect_answer) => {
+      answerOptions.push(new AnswerOption(incorrect_answer, false));
+    });
+    var correct_answer = new AnswerOption(questionData.correct_answer, true)
+    answerOptions.push(correct_answer);
+
+    this.answerOptions = answerOptions;
+    this.correctAnswer = correct_answer;
   }
 
   checkAnswer(answer) {

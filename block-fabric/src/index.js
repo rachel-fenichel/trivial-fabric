@@ -13,7 +13,9 @@ import './blocks/trivia.js';
 import './blocks/fabric_blocks.js';
 
 import Blockly from 'blockly/core';
+import "regenerator-runtime/runtime.js";
 import {FABRIC_SHAPE_TYPE} from './blocks/fabric_blocks';
+
 
 // TODO: Update block definition.
 Blockly.defineBlocksWithJsonArray([

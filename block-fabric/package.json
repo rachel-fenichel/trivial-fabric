@@ -40,7 +40,8 @@
   "devDependencies": {
     "@blockly/dev-scripts": "^1.0.3",
     "@blockly/dev-tools": "^1.1.3",
-    "blockly": "^3.20200625.2"
+    "blockly": "^3.20200625.2",
+    "regenerator-runtime": "^0.13.7"
   },
   "peerDependencies": {
     "blockly": ">=2"

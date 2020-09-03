@@ -9,7 +9,7 @@
       margin: 0;
     }
     #editor {
-      height: 500px;
+      height: 1500px;
       width: 100%;
       max-width: 1000px;
     }
@@ -26,9 +26,17 @@
     section {
       display: flex;
       width: 100%;
+      height: 100%;
     }
   </style>
 </head>
+
+<script>
+  function toXml() {
+    var xml = Blockly.Xml.workspaceToDom(workspace);
+    console.log(Blockly.Xml.domToPrettyText(xml));
+  }
+</script>
 
 <body>
   <section>
@@ -36,8 +44,10 @@
   <div id="gameplayDiv">
     <canvas id="gameplayCanvas">
     </canvas>
+    <button id="start">Start</button>
+    <button id="toXml">toXml</button>
   </div>
-  <button id="start">Start</button>
+  
   </section>
   <script src="../build/test_bundle.js"></script>
 </body>
