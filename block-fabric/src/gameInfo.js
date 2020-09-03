@@ -31,6 +31,10 @@ export class GameInfo {
     console.log('You played ' + this.questionIndex + ' rounds');
     console.log('Your score was ' + this.score);
   }
+
+  isGameOver() {
+    return this.questionIndex >= this.questions.length
+  }
 }
 
 export class TriviaQuestion {

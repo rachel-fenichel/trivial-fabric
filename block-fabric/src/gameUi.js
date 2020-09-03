@@ -1,9 +1,10 @@
 import { fabric } from 'fabric';
 
 export class GameUi {
-  constructor(id) {
+  constructor(id, onClickFn) {
     this.height = 500;
     this.width = 500;
+    this.onClickFn = onClickFn;
     this.colors = this.makeColorsObject();
     this.makeCanvas(id);
   }
@@ -18,12 +19,18 @@ export class GameUi {
   }
 
   makeCanvas(id) {
-    this.canvas = new fabric.StaticCanvas(id,
+    this.canvas = new fabric.Canvas(id,
       {
         width: this.width,
         height: this.height,
         backgroundColor: this.colors.background
       });
+    this.canvas.on('mouse:down', this.onClickFn);
+    }
+
+  resetCanvas() {
+    this.canvas.clear();
+    this.canvas.setBackgroundColor(this.colors.background);
   }
 
   renderQuestion(triviaQuestion) {
@@ -31,6 +38,15 @@ export class GameUi {
     this.renderQuestionBackground();
     this.renderQuestionText();
     this.renderAnswerOptions();
+  }
+
+  renderScore(score) {
+    this.canvas.add(new fabric.Text('Score: ' + score, { left: 5, top: 10, fontSize: 16 }));
+  }
+
+  renderGameOver() {
+    this.resetCanvas();
+    this.canvas.add(new fabric.Text('GAME OVER', {left: 150, top: 240}));
   }
 
   renderAnswerOptions() {
