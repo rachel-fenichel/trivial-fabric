@@ -10,7 +10,8 @@
     }
     #editor {
       height: 500px;
-      width: 500px;
+      width: 100%;
+      max-width: 1000px;
     }
     #gameplayDiv {
       height: 500px;
@@ -18,8 +19,13 @@
       background-color: mediumslateblue;
     }
 
+    .blocklySvg {
+      width: 100%;
+    }
+
     section {
       display: flex;
+      width: 100%;
     }
   </style>
 </head>
@@ -31,6 +37,7 @@
     <canvas id="gameplayCanvas">
     </canvas>
   </div>
+  <button id="start">Start</button>
   </section>
   <script src="../build/test_bundle.js"></script>
 </body>

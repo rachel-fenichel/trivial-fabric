@@ -20,6 +20,7 @@ const allBlocks = [
   'place_holder_not_fabric_block', 'trivia_on_answer_right',
   'trivia_on_answer_wrong', 'get_score', 'update_score', 'math_number'];
 
+let gameController;
 
 document.addEventListener('DOMContentLoaded', function() {
   const defaultOptions = {
@@ -30,5 +31,9 @@ document.addEventListener('DOMContentLoaded', function() {
   };
   Blockly.inject(document.getElementById('editor'),
       defaultOptions);
-  new GameController('gameplayCanvas');
+  gameController = new GameController('gameplayCanvas');
+});
+
+document.getElementById("start").addEventListener("click", function() {
+  gameController.newGame();
 });
