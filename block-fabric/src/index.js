@@ -10,7 +10,6 @@
  */
 
 import './blocks/trivia.js';
-import './blocks/open_trivia_blocks.js';
 import './blocks/fabric_blocks.js';
 
 import Blockly from 'blockly/core';
