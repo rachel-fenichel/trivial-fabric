@@ -7,7 +7,8 @@ export class GameController {
     this.gameInfo = new GameInfo();
     this.firstTurn();
   }
-  firstTurn() {
+  async firstTurn() {
+    await this.gameInfo.reset();
     this.gameUi.resetCanvas();
     this.gameUi.renderQuestion(this.gameInfo.getQuestion());
     this.gameUi.renderScore(this.gameInfo.score);
