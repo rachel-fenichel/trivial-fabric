@@ -11,7 +11,7 @@
 import * as Blockly from 'blockly';
 // import {createPlayground} from '@blockly/dev-tools';
 import '../src/index';
-import {GameUi} from '../src/gameUi';
+import {GameController} from '../src/gameController';
 
 // TODO: Edit list of blocks.
 const allBlocks = [
@@ -30,5 +30,5 @@ document.addEventListener('DOMContentLoaded', function() {
   };
   Blockly.inject(document.getElementById('editor'),
       defaultOptions);
-  new GameUi('gameplayCanvas');
+  new GameController('gameplayCanvas');
 });

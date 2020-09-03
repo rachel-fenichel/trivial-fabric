@@ -35,12 +35,25 @@ export class GameInfo {
 
 export class TriviaQuestion {
   constructor() {
-    this.questionText = '';
-    this.answerOptions = [];
-    this.correctAnswer = '';
+    this.questionText = 'Is this a hello world?';
+    this.answerOptions =
+      [
+        new AnswerOption('Maybe', false),
+        new AnswerOption('Definitely', true),
+        new AnswerOption('Probably', false),
+        new AnswerOption('Nope', false),
+      ];
+    this.correctAnswer = this.answerOptions[1];
   }
 
   checkAnswer(answer) {
     return answer == this.correctAnswer;
+  }
+}
+
+export class AnswerOption {
+  constructor(text, correct) {
+    this.text = text;
+    this.correct = correct;
   }
 }
