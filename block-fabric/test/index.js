@@ -20,8 +20,7 @@ const allBlocks = [
   'block_template', 'trivia_draw_question_shape',
   'trivia_draw_answer_shape', 'place_holder_fabric_block',
   'place_holder_not_fabric_block', 'trivia_on_answer_right',
-  'trivia_on_answer_wrong', 'get_score', 'update_score', 'math_number',
-  'get_trivia_questions', 'create_game'];
+  'trivia_on_answer_wrong', 'get_score', 'update_score', 'math_number'];
 
 
 document.addEventListener('DOMContentLoaded', function() {
