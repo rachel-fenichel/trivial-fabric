@@ -21,7 +21,8 @@ const allBlocks = [
   'trivia_draw_answer_shape', 'place_holder_fabric_block',
   'place_holder_not_fabric_block', 'trivia_on_answer_right',
   'trivia_on_answer_wrong', 'get_score', 'update_score', 'math_number',
-  'fabric_text', 'answer_text_var', 'text', 'colour_picker', 'create_game'];
+  'fabric_text', 'fabric_ellipse', 'fabric_rect', 'answer_text_var', 'text', 'colour_picker', 
+  'create_game', 'trivia_answer', 'draw_canvas_item'];
 
 let gameController;
 let workspace;

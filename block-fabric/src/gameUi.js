@@ -69,8 +69,16 @@ export class GameUi {
 
   renderAnswerOption(index, option) {
     const { text, correct } = option;
-    this.renderAnswerOptionBackground(index, correct);
-    this.renderAnswerOptionText(index, text);
+    var code = this.getCodeForBlockType('trivia_answer');
+    if (code) {
+      const top = 175 + (index * 75);
+      const optionText = text;
+      eval(code);
+    } else {
+      this.renderAnswerOptionBackground(index, correct);
+      this.renderAnswerOptionText(index, text);
+    }
+    
   }
 
   renderAnswerOptionBackground(index, correct) {
@@ -83,13 +91,8 @@ export class GameUi {
 
   renderAnswerOptionText(index, optionText) {
     const top = 175 + (index * 75) + 5;
-    var code = this.getCodeForBlockType('fabric_text');
-    if (code) {
-      eval(code);
-    } else {
-      const text = new fabric.Text(optionText, { left: 100, top: top });
-      this.canvas.add(text);
-    }
+    const text = new fabric.Text(optionText, { left: 100, top: top });
+    this.canvas.add(text);
     
   }
 
