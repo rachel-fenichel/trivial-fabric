@@ -1,5 +1,12 @@
 export class GameInfo {
-  constructor() {
+  constructor(apiUrl) {
+    this.apiUrl = "https://opentdb.com/api.php?amount=10";
+  }
+
+  setUrl(apiUrl) {
+    if (apiUrl) {
+      this.apiUrl = apiUrl;
+    }
   }
 
   async reset() {
@@ -10,7 +17,7 @@ export class GameInfo {
   }
 
   async getQuestionList(api_url) {
-    const resp = await fetch("https://opentdb.com/api.php?amount=10&type=multiple");
+    const resp = await fetch(this.apiUrl);
     const jsonData = await resp.json();
     const questions = jsonData.results;
     const parsedQuestions = this.parseQuestions(questions);
@@ -37,6 +44,7 @@ export class GameInfo {
       this.score++;
     }
   }
+
 
   endGame() {
     console.log('You played ' + this.questionIndex + ' rounds');
