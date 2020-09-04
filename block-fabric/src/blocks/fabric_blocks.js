@@ -135,14 +135,14 @@ Blockly.JavaScript['fabric_ellipse'] = function(block) {
   var value_colour = Blockly.JavaScript.valueToCode(block, 'COLOUR', Blockly.JavaScript.ORDER_NEW);
   var code = `new fabric.Ellipse({top: top, left: 50, rx: 200, ry: 25, fill: ${value_colour}})`
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.JavaScript.ORDER_NONE];
+  return [code, Blockly.JavaScript.ORDER_NEW];
 };
 
 Blockly.JavaScript['fabric_rect'] = function(block) {
-  var value_colour = Blockly.JavaScript.valueToCode(block, 'COLOUR', Blockly.JavaScript.ORDER_NEW);
+  var value_colour = Blockly.JavaScript.valueToCode(block, 'COLOUR', Blockly.JavaScript.ORDER_ATOMIC);
   var code = `new fabric.Rect({top: top, left: 50, width: 400, height: 50, fill: ${value_colour}})`
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.JavaScript.ORDER_NONE];
+  return [code, Blockly.JavaScript.ORDER_NEW];
 };
 
 Blockly.JavaScript['answer_text_var'] = function(block) {

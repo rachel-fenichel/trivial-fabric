@@ -84,8 +84,8 @@ export class GameUi {
   renderAnswerOptionBackground(index, correct) {
     const top = 175 + (index * 75);
     const background = correct ? this.colors.goodAnswerBackground : this.colors.badAnswerBackground;
-    this.canvas.add(new fabric.Ellipse({
-      top: top, left: 50, rx: 200, ry: 25, fill: background
+    this.canvas.add(new fabric.Rect({
+      top: top, left: 50, width: 400, height: 50, fill: background
     }));
   }
 
